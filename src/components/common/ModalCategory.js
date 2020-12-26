@@ -4,44 +4,74 @@ import { Modal, Button, Form, Row, Col, Container } from "react-bootstrap";
 import Swal from "sweetalert2";
 
 function ModalCategory(props) {
-    const [category, setCategory] = useState("");
+    const [name, setName] = useState("");
     const [error, setError] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (category.trim() === "") {
+        if (name.trim() === "") {
             setError(true);
+            Swal.fire({
+                icon: 'error',
+                title: "El campo no puede estar vacío",
+                timer: 1500,
+                showConfirmButton: false
+            });
+            return;
+        } else if (name.length < 4) {
+            setError(true);
+            Swal.fire({
+                icon: 'error',
+                title: "El campo debe tener al menos 3 caracteres",
+                timer: 1500,
+                showConfirmButton: false
+            });
             return;
         } else {
+            const dataToSend = { name };
             try {
+                const urlCategories = "http://localhost:4000/api/categories";
                 const header = {
                     method: "POST",
                     headers: {
-                        "Content-Type": "application/json",
+                        "Content-Type": "application/json"
                     },
-                    body: JSON.stringify(category),
+                    body: JSON.stringify(dataToSend)
                 };
                 const result = await fetch(
-                    `http://localhost:4000/api/categories`,
+                    urlCategories,
                     header
                 );
+                const resultMsg = await result.json()
 
                 switch (result.status) {
                     case 201:
+                        Swal.fire({
+                            icon: 'success',
+                            title: resultMsg.msg,
+                            timer: 1500,
+                            showConfirmButton: false
+                        });
+                        props.queryCategories();
                         props.history.push("/");
                         break;
-                    case 400:
+                    case 403:
+                        Swal.fire({
+                            icon: 'warning',
+                            title: resultMsg.msg,
+                            timer: 1500,
+                            showConfirmButton: false
+                        });
                         props.history.push("/");
-                        break;
-                    case 404:
-                        Swal.fire("Error", "Algo no encontrado", "error");
                         break;
                     default:
-                        Swal.fire(
-                            "Error",
-                            "Usuario o contraseña incorrecta",
-                            "error"
-                        );
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Algo pasó',
+                            timer: 1500,
+                            showConfirmButton: false
+                        });
                         break;
                 }
             } catch (error) {
@@ -50,6 +80,7 @@ function ModalCategory(props) {
                     "Ocurrió un error, intente nuevamente",
                     "error"
                 );
+                setError(true);
             }
         }
         setError(false);
@@ -79,24 +110,16 @@ function ModalCategory(props) {
                                     type="text"
                                     placeholder="Ej: Ford"
                                     onChange={(e) => {
-                                        setCategory(e.target.value);
+                                        setName(e.target.value);
                                     }}
                                 />
                             </Col>
                         </Form.Group>
-                        {/* <Form.Group as={Row} className="justify-content-end">
-                            <Col sm={{ span: 10, offset: 2 }}>
-                                <Button variant="warning" type="submit" onClick={props.onHide}>Agregar</Button>
-                            </Col>
-                            <Col sm={{ span: 10, offset: 2 }}>
-                                <Button variant="warning" onClick={props.onHide}>Cerrar</Button>
-                            </Col>
-                        </Form.Group> */}
                     </Form>
                 </Container>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="warning" type="submit" onClick={handleSubmit}>
+                <Button variant="warning" onClick={handleSubmit}>
                     Agregar
                 </Button>
                 <Button variant="warning" onClick={props.onHide}>

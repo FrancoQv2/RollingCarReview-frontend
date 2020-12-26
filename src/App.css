@@ -1,1 +1,19 @@
+.carrouselCategory {
+    border-radius: 5px;
+    color: white;
+}
 
+.imgCategory {
+    justify-self: center;
+    align-self: center;
+    transition: transform .4s;
+}
+
+.imgCategory:hover {
+    z-index: 2000;
+    transform: scale(1.2);
+}
+
+.slick-list {
+    padding: 20px 60px !important;
+}

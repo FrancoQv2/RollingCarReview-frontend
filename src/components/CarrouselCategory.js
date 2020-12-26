@@ -1,40 +1,63 @@
 import React from "react";
+import { withRouter, Link } from "react-router-dom";
+import { Container, Image } from "react-bootstrap";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import { withRouter } from "react-router-dom";
+import "../App.css";
 
 function CarrouselCategory(props) {
+    const oneCategory = props.category;
+    const categoryReviews = oneCategory.reviews;
+
     const settings = {
-        className: "center",
+        className: "center py-2",
         centerMode: true,
-        infinite: true,
+        infinite: oneCategory.reviews.length > 3,
         centerPadding: "60px",
         slidesToShow: 3,
         speed: 500,
+        rows: 1,
+        swipeToSlide: true,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 3
+                },
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 2,
+                    initialSlide: 2,
+                },
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                },
+            },
+        ]
     };
     return (
-        <div>
-            <h2>Center Mode</h2>
+        <Container className="my-4 py-4 px-5 bg-dark carrouselCategory">
+            <h1><u>{oneCategory.name}</u></h1>
             <Slider {...settings}>
-                <div>
-                    <h3>1</h3>
-                </div>
-                <div>
-                    <h3>2</h3>
-                </div>
-                <div>
-                    <h3>3</h3>
-                </div>
-                <div>
-                    <h3>4</h3>
-                </div>
-                <div>
-                    <h3>5</h3>
-                </div>
-                <div>
-                    <h3>6</h3>
-                </div>
+                {categoryReviews.map((item, pos) => {
+                    return (
+                        <div key={pos} className="px-3 imgCategory">
+                            <Link to={`/reviews/${item._id}`}>
+                                <Image src={item.thumbnail} title={item.title} alt={"imgReview" + pos} thumbnail/>
+                            </Link>
+                        </div>
+                    );
+                })}
             </Slider>
-        </div>
+        </Container>
     );
 }
 

@@ -5,9 +5,11 @@ import './NavigationBar.css';
 import ModalCategory from './ModalCategory'
 import ModalReview from './ModalReview'
 
-const NavigationBar = () => {
+const NavigationBar = (props) => {
     const [modalCategoryShow, setModalCategoryShow] = useState(false);
     const [modalReviewShow, setModalReviewShow] = useState(false);
+
+    const arrayCategories = props.arrayCategories;
 
     return (
         <>
@@ -34,8 +36,17 @@ const NavigationBar = () => {
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
-            <ModalCategory show={modalCategoryShow} onHide={() => setModalCategoryShow(false)}/>
-            <ModalReview show={modalReviewShow} onHide={() => setModalReviewShow(false)}/>
+            <ModalCategory 
+                queryCategories={props.queryCategories}
+                show={modalCategoryShow} 
+                onHide={() => setModalCategoryShow(false)}
+            />
+            <ModalReview
+                arrayCategories={arrayCategories}
+                queryCategories={props.queryCategories}
+                show={modalReviewShow} 
+                onHide={() => setModalReviewShow(false)}
+            />
         </>
     );
 };
