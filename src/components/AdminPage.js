@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import CarrouselCategory from "./CarrouselCategory";
 
-function HomePage(props) {
+function AdminPage(props) {
   let arrayCategories = props.arrayCategories;
   
   let oneCategory = {};
@@ -15,7 +15,6 @@ function HomePage(props) {
                     <p className="display-3"><b>Reviews Principales</b></p>
                 </div>
             </Container>
-            {localStorage.clear()}
             {arrayCategories.map((item, pos) => {
               oneCategory = item;
               return (
@@ -29,4 +28,4 @@ function HomePage(props) {
     );
 }
 
-export default withRouter(HomePage);
+export default withRouter(AdminPage);

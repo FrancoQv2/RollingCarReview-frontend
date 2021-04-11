@@ -25,10 +25,6 @@ const Error404 = () => {
             https://es.wikipedia.org/wiki/HTTP_404
           </a>
         </Card>
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/4/49/404_Not_Found.png"
-          alt=""
-        />
         <Card className="mx-auto my-5 p-3 bg-light shadow-lg text-center rounded-lg">
           <h4>Códigos de estado de respuesta HTTP</h4>
           <hr />
