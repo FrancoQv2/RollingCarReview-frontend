@@ -175,13 +175,18 @@ function ReviewPage(props) {
             </Container>
             {thisReview.comments.map((item, pos) => {
                 oneComment = item;
-                return (
-                    <Comment 
-                        key={pos} 
-                        comment={oneComment}
-                        index={pos}
-                    ></Comment>
-                );
+                console.log(oneComment);
+                if (!oneComment.isDeleted) {
+                    return (
+                        <Comment 
+                            key={pos} 
+                            comment={oneComment}
+                            index={pos}
+                            queryReview={queryReview}
+                            idReview={thisReview._id}
+                        ></Comment>
+                    );
+                }
             })}
         </Fragment>
     );
