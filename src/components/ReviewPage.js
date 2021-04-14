@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, useParams } from "react-router-dom";
 import {
     Container,
     ResponsiveEmbed,
@@ -13,39 +13,30 @@ import Comment from "./Comment"
 import Swal from "sweetalert2";
 
 function ReviewPage(props) {
-    console.log(props.review);
-
-    // const localReview = localStorage.getItem('localReview');
-    // const [thisReview, setThisReview] = useState(JSON.parse(localReview));
     const [thisReview, setThisReview] = useState(props.review);
     const [refreshPage, setRefreshPage] = useState(true);
     const [username, setUsername] = useState("");
     const [content, setContent] = useState("");
     const [error, setError] = useState(false);
-
-    // console.log(typeof thisReview);
-    console.log(thisReview);
-    
-    console.log("HIZO PASADA");
     
     let oneComment = {};
+    const { id } = useParams();
 
-    // const queryReview = async () => {
-    //     // // const reviewId = localStorage.getItem('reviewId');
-    //     // const reviewId = thisReview.id;
-    //     const urlThisReview = "http://localhost:4000/api/reviews/" + thisReview._id;
-    //     try {
-    //         const getReview = await fetch(urlThisReview);
-    //         const resReview = await getReview.json();
-    //         setThisReview(resReview);
-    //         console.log(resReview);
-    //     } catch (err) {
-    //         setError(err);
-    //     }
-    // };
+    const queryReview = async () => {
+        const urlThisReview = "http://localhost:4000/api/reviews/" + id;
+        // const urlThisReview = "http://localhost:4000/api/reviews/" + thisReview._id;
+        try {
+            const getReview = await fetch(urlThisReview);
+            const resReview = await getReview.json();
+            setThisReview(resReview);
+        } catch (err) {
+            setError(err);
+        }
+    };
 
     useEffect(() => {
         if (refreshPage) {
+            queryReview();
             setRefreshPage(false);
         }
     }, [refreshPage]);
@@ -84,8 +75,8 @@ function ReviewPage(props) {
                             timer: 1500,
                             showConfirmButton: false,
                         });
-                        props.queryReviews();
-                        props.history.push("/reviews/" + thisReview.id);
+                        queryReview();
+                        props.history.push("/reviews/" + thisReview._id);
                         setUsername("");
                         setContent("");
                         break;
@@ -134,11 +125,11 @@ function ReviewPage(props) {
                     <embed src={thisReview.url} />
                 </ResponsiveEmbed>
             </Container>
-            {/* <Container className="py-2">
+            <Container className="py-2">
                 <Button size="sm" variant="secondary" disabled>
                     {thisReview.category.name}
                 </Button>
-            </Container> */}
+            </Container>
             <Container>
                 <Jumbotron className="py-3">
                     <h3 className="pb-2">Deje un comentario!</h3>
@@ -182,18 +173,16 @@ function ReviewPage(props) {
                     </Form>
                 </Jumbotron>
             </Container>
-            
-                {thisReview.comments.map((item, pos) => {
-                    oneComment = item;
-                    return (
-                        <Comment 
-                            key={pos} 
-                            comment={oneComment}
-                            index={pos}
-                        ></Comment>
-                    );
-                })}
-            
+            {thisReview.comments.map((item, pos) => {
+                oneComment = item;
+                return (
+                    <Comment 
+                        key={pos} 
+                        comment={oneComment}
+                        index={pos}
+                    ></Comment>
+                );
+            })}
         </Fragment>
     );
 }
