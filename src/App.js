@@ -49,7 +49,9 @@ function App() {
         <Router>
             <NavigationBar
                 arrayCategories={arrayCategories}
+                arrayReviews={arrayReviews}
                 queryCategories={queryCategories}
+                queryReviews={queryReviews}
             ></NavigationBar>
             <Switch>
                 <Route exact path="/">
@@ -69,21 +71,17 @@ function App() {
                         if (reviewLS) existLS = true;
 
                         const reviewId = props.match.params.id;
-                        let selectReview = {};
-                        
-                        if (!existLS) {
-                            selectReview = arrayReviews.find(
-                                (review) => review._id === reviewId
-                            );
-                        } else {
-                            selectReview = reviewLS;
-                        }
+                        let selectedReview = {};
 
-                        localStorage.setItem('localReview', JSON.stringify(selectReview));
+                        existLS ? (selectedReview = reviewLS) : (selectedReview = arrayReviews.find(
+                            (review) => review._id === reviewId
+                        ))
+
+                        localStorage.setItem('localReview', JSON.stringify(selectedReview));
                         return (
                             <section className="my-4">
                                 <ReviewPage
-                                    review={selectReview}
+                                    review={selectedReview}
                                 ></ReviewPage>
                             </section>
                         );

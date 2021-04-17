@@ -23,15 +23,6 @@ function ModalReview(props) {
                 showConfirmButton: false
             });
             return;
-        // } else if (name.length < 4) {
-        //     setError(true);
-        //     Swal.fire({
-        //         icon: 'error',
-        //         title: "El campo debe tener al menos 3 caracteres",
-        //         timer: 1500,
-        //         showConfirmButton: false
-        //     });
-        //     return;
         } else {
             const selectCategory = arrayCategories.find(
                 (getCategory) => getCategory.name === categoryName
@@ -40,7 +31,7 @@ function ModalReview(props) {
             const dataToSend = { title, url, thumbnail, category };
 
             try {
-                const urlCategories = "http://localhost:4000/api/reviews";
+                const urlReviews = "http://localhost:4000/api/reviews";
                 const header = {
                     method: "POST",
                     headers: {
@@ -49,7 +40,7 @@ function ModalReview(props) {
                     body: JSON.stringify(dataToSend)
                 };
                 const result = await fetch(
-                    urlCategories,
+                    urlReviews,
                     header
                 );
                 const resultMsg = await result.json()

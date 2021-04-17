@@ -19,12 +19,11 @@ function ReviewPage(props) {
     const [content, setContent] = useState("");
     const [error, setError] = useState(false);
     
-    let oneComment = {};
     const { id } = useParams();
+    let posRealComment = 0;
 
     const queryReview = async () => {
         const urlThisReview = "http://localhost:4000/api/reviews/" + id;
-        // const urlThisReview = "http://localhost:4000/api/reviews/" + thisReview._id;
         try {
             const getReview = await fetch(urlThisReview);
             const resReview = await getReview.json();
@@ -56,7 +55,6 @@ function ReviewPage(props) {
             const dataToSend = { username, content };
             try {
                 const urlReviews = "http://localhost:4000/api/reviews/" + thisReview._id;
-                console.log(urlReviews);
                 const header = {
                     method: "POST",
                     headers: {
@@ -121,18 +119,18 @@ function ReviewPage(props) {
                 </div>
             </Container>
             <Container className="py-5">
-                <ResponsiveEmbed aspectRatio="16by9">
+                <ResponsiveEmbed aspectRatio="16by9" className="shadow-lg">
                     <embed src={thisReview.url} />
                 </ResponsiveEmbed>
             </Container>
             <Container className="py-2">
-                <Button size="sm" variant="secondary" disabled>
+                <Button className="shadow" size="sm" variant="secondary" disabled>
                     {thisReview.category.name}
                 </Button>
             </Container>
             <Container>
-                <Jumbotron className="py-3">
-                    <h3 className="pb-2">Deje un comentario!</h3>
+                <Jumbotron className="py-3 shadow-sm">
+                    <h3 className="pb-2">Déjenos un comentario!</h3>
                     <Form>
                         <Form.Group as={Row} controlId="commentUsername">
                             <Form.Label column sm={2} size="sm">
@@ -173,17 +171,17 @@ function ReviewPage(props) {
                     </Form>
                 </Jumbotron>
             </Container>
-            {thisReview.comments.map((item, pos) => {
-                oneComment = item;
-                console.log(oneComment);
+            {thisReview.comments.map((oneComment, pos) => {
                 if (!oneComment.isDeleted) {
+                    posRealComment += 1;
                     return (
                         <Comment 
                             key={pos} 
                             comment={oneComment}
-                            index={pos}
+                            index={posRealComment}
                             queryReview={queryReview}
                             idReview={thisReview._id}
+                            className="shadow-sm"
                         ></Comment>
                     );
                 }

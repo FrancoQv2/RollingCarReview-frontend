@@ -1,20 +1,18 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { withRouter } from "react-router-dom";
 import { Container, Row, Col, Jumbotron, Button } from "react-bootstrap";
-// import CarrouselCategory from "./CarrouselCategory";
 import Swal from "sweetalert2";
 
 function Comment(props) {
     const [comment, setComment] = useState(props.comment);
     const [error, setError] = useState(false);
-    let nroComment = props.index + 1;
 
     const handleClick = async (e) => {
         e.preventDefault();
         const dataToSend = comment;
+
         try {
             const urlReviews = "http://localhost:4000/api/comments/" + comment._id;
-            console.log(urlReviews);
             const header = {
                 method: "PUT",
                 headers: {
@@ -22,7 +20,6 @@ function Comment(props) {
                 },
                 body: JSON.stringify(dataToSend)
             };
-            console.log(header);
             const result = await fetch(urlReviews, header);
             const resultMsg = await result.json();
 
@@ -72,7 +69,7 @@ function Comment(props) {
             <Container>
                 <Jumbotron className="py-3">
                     <Row>
-                        <Col sm={2}><b>#{nroComment} - {comment.username}</b></Col>
+                        <Col sm={2}><b>#{props.index} - {comment.username}</b></Col>
                         <Col sm={9}>{comment.content}</Col>
                         <Col sm={1}>
                             <Button variant="danger" size="sm" onClick={handleClick}>

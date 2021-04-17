@@ -44,8 +44,8 @@ function CarrouselCategory(props) {
         ]
     };
     return (
-        <Container className="my-4 py-4 px-5 bg-dark carrouselCategory">
-            <h1><u>{oneCategory.name}</u></h1>
+        <Container className="my-4 py-3 px-5 bg-dark carrouselCategory">
+            <h1 className="title-category"><u>{oneCategory.name}</u></h1>
             <Slider {...settings}>
                 {categoryReviews.map((item, pos) => {
                     return (
