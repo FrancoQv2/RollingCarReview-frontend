@@ -23,7 +23,7 @@ function ReviewPage(props) {
     let posRealComment = 0;
 
     const queryReview = async () => {
-        const urlThisReview = "http://localhost:4000/api/reviews/" + id;
+        const urlThisReview = "https://rolling-car-review.herokuapp.com/api/reviews/" + id;
         try {
             const getReview = await fetch(urlThisReview);
             const resReview = await getReview.json();
@@ -54,7 +54,7 @@ function ReviewPage(props) {
         } else {
             const dataToSend = { username, content };
             try {
-                const urlReviews = "http://localhost:4000/api/reviews/" + thisReview._id;
+                const urlReviews = "https://rolling-car-review.herokuapp.com/api/reviews/" + thisReview._id;
                 const header = {
                     method: "POST",
                     headers: {

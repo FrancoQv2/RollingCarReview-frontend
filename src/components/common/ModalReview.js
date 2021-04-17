@@ -31,7 +31,7 @@ function ModalReview(props) {
             const dataToSend = { title, url, thumbnail, category };
 
             try {
-                const urlReviews = "http://localhost:4000/api/reviews";
+                const urlReviews = "https://rolling-car-review.herokuapp.com/api/reviews";
                 const header = {
                     method: "POST",
                     headers: {

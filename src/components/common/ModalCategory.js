@@ -30,7 +30,7 @@ function ModalCategory(props) {
         } else {
             const dataToSend = { name };
             try {
-                const urlCategories = "http://localhost:4000/api/categories";
+                const urlCategories = "https://rolling-car-review.herokuapp.com/api/categories";
                 const header = {
                     method: "POST",
                     headers: {

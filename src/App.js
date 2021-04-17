@@ -16,7 +16,7 @@ function App() {
     const [errors, setErrors] = useState(false);
 
     const queryCategories = async () => {
-        const urlCategories = "http://localhost:4000/api/categories";
+        const urlCategories = "https://rolling-car-review.herokuapp.com/api/categories";
         try {
             const queryCategories = await fetch(urlCategories);
             const resCategories = await queryCategories.json();
@@ -27,7 +27,7 @@ function App() {
     };
 
     const queryReviews = async () => {
-        const urlReviews = "http://localhost:4000/api/reviews";
+        const urlReviews = "https://rolling-car-review.herokuapp.com/api/reviews";
         try {
             const queryReviews = await fetch(urlReviews);
             const resReviews = await queryReviews.json();

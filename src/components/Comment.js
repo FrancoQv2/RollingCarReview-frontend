@@ -12,7 +12,7 @@ function Comment(props) {
         const dataToSend = comment;
 
         try {
-            const urlReviews = "http://localhost:4000/api/comments/" + comment._id;
+            const urlReviews = "https://rolling-car-review.herokuapp.com/api/comments/" + comment._id;
             const header = {
                 method: "PUT",
                 headers: {
