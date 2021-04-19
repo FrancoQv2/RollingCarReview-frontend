@@ -1,3 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Orelega+One&display=swap');
+
+.brand{
+    font-family: 'Orelega One', cursive;
+}
+
+.background {
+    background: rgb(139,87,164);
+    background: linear-gradient(0deg, rgba(139,87,164,1) 0%, rgba(253,29,29,1) 50%, rgba(255,173,58,1) 100%);
+    padding-bottom: 3rem !important;
+}
+
+.title-page {
+    font-family: 'Orelega One', cursive;
+    color: white;
+}
+
+.title-category {
+    font-family: 'Orelega One', cursive;
+    color: white;
+}
+
 .carrouselCategory {
     border-radius: 5px;
     color: white;

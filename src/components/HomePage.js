@@ -10,8 +10,8 @@ function HomePage(props) {
         <Fragment>
             <Container>
                 <div className="text-center py-5">
-                    <p className="display-3 title-page">
-                        <b><u>Reviews Principales</u></b>
+                    <p className="display-2 title-page">
+                        <b>Reviews Principales</b>
                     </p>
                 </div>
             </Container>

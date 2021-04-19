@@ -105,10 +105,10 @@ function CarrouselCategory(props) {
     };
     
     return (
-        <Container className="my-4 py-3 px-5 bg-dark carrouselCategory">
+        <Container className="my-4 py-3 px-5 bg-dark carrouselCategory shadow-lg">
             <Row>
                 <Col sm={11}>
-                    <h1 className="title-category"><u>{oneCategory.name}</u></h1>
+                    <h1 className="title-category">{oneCategory.name}</h1>
                 </Col>
                 <Col sm={1}>
                     <Button variant="danger" size="sm">

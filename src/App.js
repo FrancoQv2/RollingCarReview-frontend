@@ -55,8 +55,9 @@ function App() {
             ></NavigationBar>
             <Switch>
                 <Route exact path="/">
-                    <section className="my-4">
+                    <section className="background">
                         <HomePage
+                            className="my-4"
                             arrayCategories={arrayCategories}
                             arrayReviews={arrayReviews}
                             queryCategories={queryCategories}
@@ -80,7 +81,7 @@ function App() {
 
                         localStorage.setItem('localReview', JSON.stringify(selectedReview));
                         return (
-                            <section className="my-4">
+                            <section className="background">
                                 <ReviewPage
                                     review={selectedReview}
                                 ></ReviewPage>

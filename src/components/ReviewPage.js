@@ -168,7 +168,7 @@ function ReviewPage(props) {
     return (
         <Fragment>
             <Container>
-                <div className="text-center pt-5 pb-2">
+                <div className="text-center pt-5 pb-2 title-page">
                     <p className="display-3">
                         <b>{thisReview.title}</b>
                     </p>
@@ -182,12 +182,12 @@ function ReviewPage(props) {
             <Container className="py-2">
                 <Row>
                     <Col sm={1}>
-                        <Button className="shadow" size="sm" variant="secondary" disabled>
+                        <Button className="shadow" size="sm" variant="dark" disabled>
                             {thisReview.category.name}
                         </Button>
                     </Col>
                     <Col sm={11}>
-                        <Button variant="danger" size="sm">
+                        <Button variant="warning" size="sm">
                             <span role="img" aria-label="" onClick={deleteCategory}>🗑️</span>
                         </Button>
                     </Col>
