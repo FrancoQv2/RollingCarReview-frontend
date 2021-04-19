@@ -40,6 +40,7 @@ const NavigationBar = (props) => {
                 </Navbar.Collapse>
             </Navbar>
             <ModalCategory 
+                arrayCategories={arrayCategories}
                 queryCategories={props.queryCategories}
                 show={modalCategoryShow} 
                 onHide={() => setModalCategoryShow(false)}

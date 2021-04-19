@@ -1,20 +1,31 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import { Modal, Button, Form, Row, Col, Container } from "react-bootstrap";
+import Select from 'react-select'
 import Swal from "sweetalert2";
+
+const URL_EMBED = "https://www.youtube.com/embed/";
+const URL_THUMBNAIL = "https://img.youtube.com/vi/";
+const URL_THUMBNAIL_TYPE1 = "/maxresdefault.jpg";
+
 
 function ModalReview(props) {
     const [title, setTitle] = useState("");
-    const [url, setUrl] = useState("");
-    const [thumbnail, setThumbnail] = useState("");
-    const [categoryName, setCategoryName] = useState("");
+    const [idVideo, setidVideo] = useState("");
+    const [categoryName, setCategoryName] = useState({});
     const [error, setError] = useState(false);
 
     const arrayCategories = props.arrayCategories;
+    let optionsCategory = []
 
+    arrayCategories.forEach(category => {
+        const categ = { value: category.name, label: category.name }
+        optionsCategory.push(categ)
+    });
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (title.trim() === "" || url.trim() === "" || thumbnail.trim() === "" || categoryName.trim() === "") {
+        if (title.trim() === "" || idVideo.trim() === "" || categoryName.value.trim() === "") {
             setError(true);
             Swal.fire({
                 icon: 'error',
@@ -25,10 +36,13 @@ function ModalReview(props) {
             return;
         } else {
             const selectCategory = arrayCategories.find(
-                (getCategory) => getCategory.name === categoryName
+                (getCategory) => getCategory.name === categoryName.value
             );
             const category = selectCategory.id;
+            const url = URL_EMBED + idVideo;
+            const thumbnail = URL_THUMBNAIL + idVideo + URL_THUMBNAIL_TYPE1;
             const dataToSend = { title, url, thumbnail, category };
+            console.log(dataToSend);
 
             try {
                 const urlReviews = "https://rolling-car-review.herokuapp.com/api/reviews";
@@ -119,35 +133,18 @@ function ModalReview(props) {
                         </Form.Group>
                         <Form.Group as={Row} controlId="reviewUrl">
                             <Form.Label column sm={2}>
-                                URL
+                                ID Video
                             </Form.Label>
                             <Col sm={10}>
                                 <Form.Control
                                     type="text"
-                                    placeholder="Ingrese una URL de YouTube"
+                                    placeholder="Ingrese el ID de un video de YouTube"
                                     onChange={(e) => {
-                                        setUrl(e.target.value);
+                                        setidVideo(e.target.value);
                                     }}
                                 />
                                 <Form.Text className="text-muted">
-                                    Una URL de YouTube tiene esta forma: https://www.youtube.com/embed/[video-id]
-                                </Form.Text>
-                            </Col>
-                        </Form.Group>
-                        <Form.Group as={Row} controlId="reviewThumbnail">
-                            <Form.Label column sm={2}>
-                                Miniatura
-                            </Form.Label>
-                            <Col sm={10}>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Utilice el ID del video de YouTube"
-                                    onChange={(e) => {
-                                        setThumbnail(e.target.value);
-                                    }}
-                                />
-                                <Form.Text className="text-muted">
-                                    Reemplace la id del video aquí: https://img.youtube.com/vi/[video-id]/maxresdefault.jpg
+                                    Forma de URL de YouTube: https://www.youtube.com/watch?v=[video-id]&ab_channel=[channel]
                                 </Form.Text>
                             </Col>
                         </Form.Group>
@@ -156,12 +153,12 @@ function ModalReview(props) {
                                 Categoría
                             </Form.Label>
                             <Col sm={10}>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Ej: Ford"
-                                    onChange={(e) => {
-                                        setCategoryName(e.target.value);
-                                    }}
+                                <Select 
+                                    options={optionsCategory}
+                                    placeholder="Seleccione alguna de las siguientes categorías"
+                                    autoFocus
+                                    isSearchable
+                                    onChange={setCategoryName}
                                 />
                             </Col>
                         </Form.Group>
