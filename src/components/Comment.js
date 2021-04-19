@@ -7,7 +7,7 @@ function Comment(props) {
     const [comment, setComment] = useState(props.comment);
     const [error, setError] = useState(false);
 
-    const handleClick = async (e) => {
+    const deleteComment = async (e) => {
         e.preventDefault();
         const dataToSend = comment;
 
@@ -69,10 +69,14 @@ function Comment(props) {
             <Container>
                 <Jumbotron className="py-3">
                     <Row>
-                        <Col sm={2}><b>#{props.index} - {comment.username}</b></Col>
+                        <Col sm={2}>
+                            <Row><b>#{props.index+1} - {comment.username}</b></Row>
+                            <Row>{comment.createdAt.substring(0,10)}</Row>
+                            {/* <Row>{comment.createdAt.substring(11,19)}</Row> */}
+                        </Col>
                         <Col sm={9}>{comment.content}</Col>
                         <Col sm={1}>
-                            <Button variant="danger" size="sm" onClick={handleClick}>
+                            <Button variant="danger" size="sm" onClick={deleteComment}>
                                 <span role="img" aria-label="">🗑️</span>
                             </Button>
                         </Col>

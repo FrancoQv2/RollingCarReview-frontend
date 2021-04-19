@@ -20,7 +20,6 @@ function ReviewPage(props) {
     const [error, setError] = useState(false);
     
     const { id } = useParams();
-    let posRealComment = 0;
 
     const queryReview = async () => {
         const urlThisReview = "https://rolling-car-review.herokuapp.com/api/reviews/" + id;
@@ -109,6 +108,63 @@ function ReviewPage(props) {
         setError(false);
     };
 
+    const deleteCategory = async (e) => {
+        e.preventDefault();
+        const dataToSend = thisReview;
+        
+        try {
+            const urlReviews = "https://rolling-car-review.herokuapp.com/api/reviews/" + thisReview._id;
+            const header = {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(dataToSend)
+            };
+            const result = await fetch(urlReviews, header);
+            const resultMsg = await result.json();
+
+            switch (result.status) {
+                case 200:
+                    Swal.fire({
+                        icon: "success",
+                        title: resultMsg.msg,
+                        timer: 1500,
+                        showConfirmButton: false,
+                    });
+                    props.queryCategories();
+                    props.history.push("/");
+                    break;
+                case 404:
+                    Swal.fire({
+                        icon: "warning",
+                        title: resultMsg.msg,
+                        timer: 1500,
+                        showConfirmButton: false,
+                    });
+                    props.history.push("/");
+                    break;
+                default:
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: "Algo pasó",
+                        timer: 1500,
+                        showConfirmButton: false,
+                    });
+                    break;
+            }
+        } catch (error) {
+            Swal.fire(
+                "Ops...",
+                "Ocurrió un error, intente nuevamente",
+                "error"
+            );
+            setError(true);
+        }
+        setError(false);
+    };
+
     return (
         <Fragment>
             <Container>
@@ -124,9 +180,18 @@ function ReviewPage(props) {
                 </ResponsiveEmbed>
             </Container>
             <Container className="py-2">
-                <Button className="shadow" size="sm" variant="secondary" disabled>
-                    {thisReview.category.name}
-                </Button>
+                <Row>
+                    <Col sm={1}>
+                        <Button className="shadow" size="sm" variant="secondary" disabled>
+                            {thisReview.category.name}
+                        </Button>
+                    </Col>
+                    <Col sm={11}>
+                        <Button variant="danger" size="sm">
+                            <span role="img" aria-label="" onClick={deleteCategory}>🗑️</span>
+                        </Button>
+                    </Col>
+                </Row>
             </Container>
             <Container>
                 <Jumbotron className="py-3 shadow-sm">
@@ -172,19 +237,16 @@ function ReviewPage(props) {
                 </Jumbotron>
             </Container>
             {thisReview.comments.map((oneComment, pos) => {
-                if (!oneComment.isDeleted) {
-                    posRealComment += 1;
-                    return (
-                        <Comment 
-                            key={pos} 
-                            comment={oneComment}
-                            index={posRealComment}
-                            queryReview={queryReview}
-                            idReview={thisReview._id}
-                            className="shadow-sm"
-                        ></Comment>
-                    );
-                }
+                return (
+                    <Comment 
+                        key={pos} 
+                        comment={oneComment}
+                        index={pos}
+                        queryReview={queryReview}
+                        idReview={thisReview._id}
+                        className="shadow-sm"
+                    ></Comment>
+                );
             })}
         </Fragment>
     );

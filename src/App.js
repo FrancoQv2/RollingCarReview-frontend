@@ -59,6 +59,7 @@ function App() {
                         <HomePage
                             arrayCategories={arrayCategories}
                             arrayReviews={arrayReviews}
+                            queryCategories={queryCategories}
                         ></HomePage>
                     </section>
                 </Route>

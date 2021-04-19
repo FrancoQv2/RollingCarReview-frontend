@@ -21,6 +21,7 @@ function HomePage(props) {
                     <CarrouselCategory
                         key={pos}
                         category={oneCategory}
+                        queryCategories={props.queryCategories}
                     ></CarrouselCategory>
                 );
             })}

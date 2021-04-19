@@ -27,9 +27,9 @@ const NavigationBar = (props) => {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ml-auto">
-                        <Button className="mx-2 my-2 shadow-sm" variant="warning" size="sm" href="/AdminPage">
+                        {/* <Button className="mx-2 my-2 shadow-sm" variant="warning" size="sm" href="/AdminPage">
                             Admin
-                        </Button>
+                        </Button> */}
                         <Button className="mx-2 my-2 shadow-sm" variant="warning" size="sm" onClick={() => setModalCategoryShow(true)}>
                             + Categoría
                         </Button>
