@@ -58,8 +58,8 @@ function App() {
                     <section className="background">
                         <HomePage
                             className="my-4"
-                            arrayCategories={arrayCategories}
                             arrayReviews={arrayReviews}
+                            arrayCategories={arrayCategories}
                             queryCategories={queryCategories}
                         ></HomePage>
                     </section>
@@ -84,6 +84,7 @@ function App() {
                             <section className="background">
                                 <ReviewPage
                                     review={selectedReview}
+                                    queryCategories={queryCategories}
                                 ></ReviewPage>
                             </section>
                         );

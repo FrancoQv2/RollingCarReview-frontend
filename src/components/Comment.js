@@ -12,7 +12,7 @@ function Comment(props) {
         const dataToSend = comment;
 
         try {
-            const urlReviews = "https://rolling-car-review.herokuapp.com/api/comments/" + comment._id;
+            const urlComment = "https://rolling-car-review.herokuapp.com/api/comments/" + comment._id;
             const header = {
                 method: "PUT",
                 headers: {
@@ -20,7 +20,8 @@ function Comment(props) {
                 },
                 body: JSON.stringify(dataToSend)
             };
-            const result = await fetch(urlReviews, header);
+            console.log(header);
+            const result = await fetch(urlComment, header);
             const resultMsg = await result.json();
 
             switch (result.status) {

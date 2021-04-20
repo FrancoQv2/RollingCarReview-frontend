@@ -54,6 +54,7 @@ function ModalCategory(props) {
                         });
                         props.queryCategories();
                         props.history.push("/");
+                        console.log(props.history);
                         break;
                     case 403:
                         Swal.fire({

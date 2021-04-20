@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { withRouter, useParams } from "react-router-dom";
+import { Redirect } from "react-router";
 import {
     Container,
     ResponsiveEmbed,
@@ -108,7 +109,7 @@ function ReviewPage(props) {
         setError(false);
     };
 
-    const deleteCategory = async (e) => {
+    const deleteReview = async (e) => {
         e.preventDefault();
         const dataToSend = thisReview;
         
@@ -132,8 +133,11 @@ function ReviewPage(props) {
                         timer: 1500,
                         showConfirmButton: false,
                     });
+                    localStorage.clear();
                     props.queryCategories();
-                    props.history.push("/");
+                    setTimeout(() => {
+                        props.history.push("/");
+                    }, 1200);
                     break;
                 case 404:
                     Swal.fire({
@@ -155,11 +159,14 @@ function ReviewPage(props) {
                     break;
             }
         } catch (error) {
-            Swal.fire(
-                "Ops...",
-                "Ocurrió un error, intente nuevamente",
-                "error"
-            );
+            console.log(error);
+            Swal.fire({
+                icon: "error",
+                title: "Ops...",
+                text: "Ocurrió un error, intente nuevamente",
+                timer: 2500,
+                showConfirmButton: false
+            });
             setError(true);
         }
         setError(false);
@@ -188,7 +195,7 @@ function ReviewPage(props) {
                     </Col>
                     <Col sm={11}>
                         <Button variant="warning" size="sm">
-                            <span role="img" aria-label="" onClick={deleteCategory}>🗑️</span>
+                            <span role="img" aria-label="" onClick={deleteReview}>🗑️</span>
                         </Button>
                     </Col>
                 </Row>
